@@ -1,0 +1,13 @@
+# Datasets
+Dataset/
+Preprocessing_Dataset/
+*.csv
+*.json
+*.jsonl
+*.parquet
+
+# Python cache
+__pycache__/
+
+# Virtual env
+.venv/
