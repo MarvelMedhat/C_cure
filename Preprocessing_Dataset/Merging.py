@@ -4,14 +4,14 @@ import json
 import re
 from sklearn.utils import resample
 import os
+from pathlib import Path
 
 
-
-secVulEval = 'D:\GP\Dataset\SecVulEval\secVulEval_cleaned.parquet'
+secVulEval = Path(__file__).parent / '../datasets/SecVulEval/secVulEval_cleaned.parquet'
 secVulEval = pd.read_parquet(secVulEval, engine='pyarrow')
-SVEN = 'D:\GP\Dataset\SVEN\SVEN_cleaned.parquet'
+SVEN = Path(__file__).parent / '../datasets/SVEN/SVEN_cleaned.parquet'
 SVEN = pd.read_parquet(SVEN, engine='pyarrow')
-Primevul = 'D:\GP\Dataset\PrimeVul\PrimeVul_cleaned.parquet'
+Primevul = Path(__file__).parent / '../datasets/PrimeVul/PrimeVul_cleaned.parquet'
 Primevul = pd.read_parquet(Primevul, engine='pyarrow')
 
 
@@ -60,7 +60,7 @@ dataset["cve_list"] = dataset["cve_list"].apply(ensure_list).apply(json.dumps)
 
 
 # Save merged dataset
-output_path = "D:\GP\Dataset\Merged\merged_dataset.parquet"
+output_path = Path(__file__).parent / '../datasets/Merged/merged_dataset.parquet'
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
 dataset.to_parquet(output_path, index=False, engine="pyarrow")

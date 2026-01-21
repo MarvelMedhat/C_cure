@@ -1,16 +1,17 @@
 import json
 import os
 import pandas as pd
+from pathlib import Path
 
-secVulEval = 'D:\GP\Dataset\SecVulEval\secVulEval_cleaned.parquet'
+secVulEval = Path(__file__).parent / '../datasets/SecVulEval/secVulEval_cleaned.parquet'
 secVulEval = pd.read_parquet(secVulEval, engine='pyarrow')
 
 
 # Loading PrimeVul Dataset
 file_paths = [
-    r'D:\GP\Dataset\PrimeVul\primevul_train.jsonl',
-    r'D:\GP\Dataset\PrimeVul\primevul_test.jsonl',
-    r'D:\GP\Dataset\PrimeVul\primevul_valid.jsonl'
+    r'C:\Users\mario\Pictures\C_cure\datasets\PrimeVul\primevul_train.jsonl',
+    r'C:\Users\mario\Pictures\C_cure\datasets\PrimeVul\primevul_test.jsonl',
+    r'C:\Users\mario\Pictures\C_cure\datasets\PrimeVul\primevul_valid.jsonl'
 ]
 
 def read_jsonl_safely(path):
@@ -89,7 +90,7 @@ print(Primevul["is_vulnerable"].value_counts())
 Primevul.loc[Primevul['is_vulnerable'] == False, 'cwe_list'] = Primevul.loc[Primevul['is_vulnerable'] == False, 'cwe_list'].apply(lambda _: [])
 
 
-output_file_path = 'D:\GP\Dataset\PrimeVul\PrimeVul_cleaned.parquet'
+output_file_path = Path(__file__).parent / '../datasets/PrimeVul/PrimeVul_cleaned.parquet'
 
 # Save cleaned dataset
 os.makedirs(os.path.dirname(output_file_path), exist_ok=True)

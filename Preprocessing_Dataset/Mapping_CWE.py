@@ -2,9 +2,10 @@ import ast
 import os
 import re
 import pandas as pd
+from pathlib import Path
 
 
-dataset = 'D:\GP\Dataset\Merged\merged_dataset.parquet'
+dataset = Path(__file__).parent / '../datasets/Merged/merged_dataset.parquet'
 dataset = pd.read_parquet(dataset, engine='pyarrow')
 
 
@@ -215,7 +216,7 @@ vc = dataset["cwe_list"].value_counts(dropna=False)
 with pd.option_context("display.max_rows", None, "display.max_colwidth", None):
     print(vc)
 
-output_path = "D:\GP\Dataset\Merged\merged_dataset.parquet"
+output_path = Path(__file__).parent / '../datasets/Merged/merged_dataset.parquet'
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
 dataset.to_parquet(output_path, index=False, engine="pyarrow")

@@ -1,5 +1,5 @@
 # Datasets
-Dataset/
+datasets/
 *.csv
 *.json
 *.jsonl

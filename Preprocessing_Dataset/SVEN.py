@@ -1,13 +1,14 @@
 import os
 import pandas as pd
+from pathlib import Path
 
 
-secVulEval = 'D:\GP\Dataset\SecVulEval\secVulEval_cleaned.parquet'
+secVulEval = Path(__file__).parent / '../datasets/SecVulEval/secVulEval_cleaned.parquet'
 secVulEval = pd.read_parquet(secVulEval, engine='pyarrow')
 
 
 # Loading SVEN Dataset
-file_path = r'D:\GP\Dataset\SVEN\train.parquet'
+file_path = Path(__file__).parent / '../datasets/SVEN/train.parquet'
 
 try:
     SVEN_df = pd.read_parquet(file_path)
@@ -62,7 +63,7 @@ SVEN["is_vulnerable"]=1
 
 SVEN.info()
 
-output_file_path = 'dataset/sven/SVEN_cleaned.parquet'
+output_file_path = Path(__file__).parent / '../datasets/SVEN/SVEN_cleaned.parquet'
 # Save cleaned dataset
 os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
 SVEN.to_parquet(output_file_path, index=False, engine='pyarrow')

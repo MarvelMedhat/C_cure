@@ -1,8 +1,9 @@
 import os
 import re
 import pandas as pd
+from pathlib import Path
 
-dataset = 'D:\GP\Dataset\Merged\merged_dataset.parquet'
+dataset = Path(__file__).parent / '../datasets/Merged/merged_dataset.parquet'
 dataset = pd.read_parquet(dataset, engine='pyarrow')
 
 
@@ -244,85 +245,88 @@ dataset['vulnerability_category'] = dataset['cwe_list'].apply(map_cwe_to_categor
 
 print(dataset["is_vulnerable"].value_counts())
 
-dataset["vulnerability_category"] = (
-    dataset["vulnerability_category"]
-    # Replaces "Command Injection" with "OS Command Injection"
-      .str.replace(r'(?<!OS\s)\bCommand Injection\b', 'OS Command Injection',
-                   regex=True, case=False)
-      .str.replace(r'\s{2,}', ' ', regex=True)
-      .str.strip()
-)
-dataset["vulnerability_category"] = (
-    dataset["vulnerability_category"]
-    # Replaces "authorization" with "Improper Access Control"
-      .str.replace(r'\b(Improper Authorization|Incorrect Authorization|Missing Authorization)\b',
-                   'Improper Access Control',
-                   regex=True, case=False)
-      .str.replace(r'\s{2,}', ' ', regex=True)
-      .str.strip()
-)
-dataset["vulnerability_category"] = (
-    dataset["vulnerability_category"]
-    # Replaces "Stack/Heap" with "Buffer Overflow"
-      .str.replace(r'\b(Stack|Heap)\s+Buffer Overflow\b', 'Buffer Overflow',
-                   regex=True, case=False)
-      .str.replace(r'\s{2,}', ' ', regex=True)
-      .str.strip()
-)
-dataset["vulnerability_category"] = (
-    dataset["vulnerability_category"]
-    # Replaces "race condition variants" with "Race Condition"
-      .str.replace(r'\b(Time-of-check Time-of-use|Improper Locking|Improper Synchronization)\b',
-                   'Race Condition',
-                   regex=True, case=False)
-      .str.replace(r'\s{2,}', ' ', regex=True)
-      .str.strip()
-)
-dataset["vulnerability_category"] = (
-    dataset["vulnerability_category"]
-    # Replaces "information exposure variants" with "Information Exposure"
-      .str.replace(r'\b(Exposure of Sensitive Information|Insufficiently Protected Credentials|Cleartext Transmission|Cleartext Storage of Sensitive Information|Information Exposure Through Error Message)\b',
-                   'Information Exposure',
-                   regex=True, case=False)
-      .str.replace(r'\s{2,}', ' ', regex=True)
-      .str.strip()
-)
-dataset["vulnerability_category"] = (
-    dataset["vulnerability_category"]
-    # Replaces "Out-of-bounds Read/Write" with "Out-of-bounds Access"
-      .str.replace(r'\b(Out-of-bounds Read|Out-of-bounds Write)\b',
-                   'Out-of-bounds Access',
-                   regex=True, case=False)
-      .str.replace(r'\s{2,}', ' ', regex=True)
-      .str.strip()
-)
-dataset["vulnerability_category"] = (
-    dataset["vulnerability_category"]
-     # Replaces "OAuthentication Bypass variants" with "Improper Authentication"
-      .str.replace(r'\b(Authentication Bypass by Spoofing|Authentication Bypass by Capture-replay|Improper Authentication Restriction)\b',
-                   'Improper Authentication',
-                   regex=True, case=False)
-      .str.replace(r'\s{2,}', ' ', regex=True)
-      .str.strip()
-)
-dataset["vulnerability_category"] = (
-    dataset["vulnerability_category"]
-     # Replaces "Pointer problems" with "Pointer Issue"
-      .str.replace(r'\b(NULL Pointer Dereference|Uninitialized Pointer|Release of Invalid Pointer|Use of Out-of-range Pointer)\b',
-                   'Pointer Issue',
-                   regex=True, case=False)
-      .str.replace(r'\s{2,}', ' ', regex=True)
-      .str.strip()
-)
-dataset["vulnerability_category"] = (
-    dataset["vulnerability_category"]
-     # Replaces "Memory lifecycle bugs" with "Memory Management Issue"
-      .str.replace(r'\b(Use After Free|Double Free|Memory Leak)\b',
-                   'Memory Management Issue',
-                   regex=True, case=False)
-      .str.replace(r'\s{2,}', ' ', regex=True)
-      .str.strip()
-)
+def correct_category(dataset): 
+    dataset["vulnerability_category"] = (
+        dataset["vulnerability_category"]
+        # Replaces "Command Injection" with "OS Command Injection"
+        .str.replace(r'(?<!OS\s)\bCommand Injection\b', 'OS Command Injection',
+                    regex=True, case=False)
+        .str.replace(r'\s{2,}', ' ', regex=True)
+        .str.strip()
+    )
+    dataset["vulnerability_category"] = (
+        dataset["vulnerability_category"]
+        # Replaces "authorization" with "Improper Access Control"
+        .str.replace(r'\b(Improper Authorization|Incorrect Authorization|Missing Authorization)\b',
+                    'Improper Access Control',
+                    regex=True, case=False)
+        .str.replace(r'\s{2,}', ' ', regex=True)
+        .str.strip()
+    )
+    dataset["vulnerability_category"] = (
+        dataset["vulnerability_category"]
+        # Replaces "Stack/Heap" with "Buffer Overflow"
+        .str.replace(r'\b(Stack|Heap)\s+Buffer Overflow\b', 'Buffer Overflow',
+                    regex=True, case=False)
+        .str.replace(r'\s{2,}', ' ', regex=True)
+        .str.strip()
+    )
+    dataset["vulnerability_category"] = (
+        dataset["vulnerability_category"]
+        # Replaces "race condition variants" with "Race Condition"
+        .str.replace(r'\b(Time-of-check Time-of-use|Improper Locking|Improper Synchronization)\b',
+                    'Race Condition',
+                    regex=True, case=False)
+        .str.replace(r'\s{2,}', ' ', regex=True)
+        .str.strip()
+    )
+    dataset["vulnerability_category"] = (
+        dataset["vulnerability_category"]
+        # Replaces "information exposure variants" with "Information Exposure"
+        .str.replace(r'\b(Exposure of Sensitive Information|Insufficiently Protected Credentials|Cleartext Transmission|Cleartext Storage of Sensitive Information|Information Exposure Through Error Message)\b',
+                    'Information Exposure',
+                    regex=True, case=False)
+        .str.replace(r'\s{2,}', ' ', regex=True)
+        .str.strip()
+    )
+    dataset["vulnerability_category"] = (
+        dataset["vulnerability_category"]
+        # Replaces "Out-of-bounds Read/Write" with "Out-of-bounds Access"
+        .str.replace(r'\b(Out-of-bounds Read|Out-of-bounds Write)\b',
+                    'Out-of-bounds Access',
+                    regex=True, case=False)
+        .str.replace(r'\s{2,}', ' ', regex=True)
+        .str.strip()
+    )
+    dataset["vulnerability_category"] = (
+        dataset["vulnerability_category"]
+        # Replaces "OAuthentication Bypass variants" with "Improper Authentication"
+        .str.replace(r'\b(Authentication Bypass by Spoofing|Authentication Bypass by Capture-replay|Improper Authentication Restriction)\b',
+                    'Improper Authentication',
+                    regex=True, case=False)
+        .str.replace(r'\s{2,}', ' ', regex=True)
+        .str.strip()
+    )
+    dataset["vulnerability_category"] = (
+        dataset["vulnerability_category"]
+        # Replaces "Pointer problems" with "Pointer Issue"
+        .str.replace(r'\b(NULL Pointer Dereference|Uninitialized Pointer|Release of Invalid Pointer|Use of Out-of-range Pointer)\b',
+                    'Pointer Issue',
+                    regex=True, case=False)
+        .str.replace(r'\s{2,}', ' ', regex=True)
+        .str.strip()
+    )
+    dataset["vulnerability_category"] = (
+        dataset["vulnerability_category"]
+        # Replaces "Memory lifecycle bugs" with "Memory Management Issue"
+        .str.replace(r'\b(Use After Free|Double Free|Memory Leak)\b',
+                    'Memory Management Issue',
+                    regex=True, case=False)
+        .str.replace(r'\s{2,}', ' ', regex=True)
+        .str.strip()
+    )
+    
+correct_category(dataset)
 vc2 = dataset["vulnerability_category"].value_counts(dropna=False)
 
 with pd.option_context("display.max_rows", None, "display.max_colwidth", None):
@@ -332,7 +336,7 @@ cwe_counts = dataset['cwe_list'].value_counts()
 pd.set_option('display.max_rows', None)
 print(cwe_counts)
 
-output_path = "D:\GP\Dataset\Merged\merged_dataset.parquet"
+output_path = Path(__file__).parent / '../datasets/Merged/merged_dataset.parquet'
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
 dataset.to_parquet(output_path, index=False, engine="pyarrow")

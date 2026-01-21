@@ -1,8 +1,9 @@
 import os
 import pandas as pd
+from pathlib import Path
 
 
-dataset = 'D:\GP\Dataset\Merged\merged_dataset.parquet'
+dataset = Path(__file__).parent / '../datasets/Merged/merged_dataset.parquet'
 dataset = pd.read_parquet(dataset, engine='pyarrow')
 
 
@@ -24,7 +25,7 @@ print(dataset['vulnerability_category'].value_counts())
 print(dataset['is_vulnerable'].value_counts())
 
 
-output_path = "D:\GP\Dataset\Merged\merged_dataset.parquet"
+output_path = Path(__file__).parent / '../datasets/Merged/merged_dataset.parquet'
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
 dataset.to_parquet(output_path, index=False, engine="pyarrow")
