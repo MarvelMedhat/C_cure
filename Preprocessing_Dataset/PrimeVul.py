@@ -8,11 +8,13 @@ secVulEval = pd.read_parquet(secVulEval, engine='pyarrow')
 
 
 # Loading PrimeVul Dataset
+
 file_paths = [
-    r'C:\Users\mario\Pictures\C_cure\datasets\PrimeVul\primevul_train.jsonl',
-    r'C:\Users\mario\Pictures\C_cure\datasets\PrimeVul\primevul_test.jsonl',
-    r'C:\Users\mario\Pictures\C_cure\datasets\PrimeVul\primevul_valid.jsonl'
+    Path(__file__).parent / '../datasets/PrimeVul/primevul_train.jsonl',
+    Path(__file__).parent / '../datasets/PrimeVul/primevul_test.jsonl',
+    Path(__file__).parent / '../datasets/PrimeVul/primevul_valid.jsonl'
 ]
+
 
 def read_jsonl_safely(path):
 
