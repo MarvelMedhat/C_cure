@@ -1,6 +1,13 @@
 import pandas as pd
 from pathlib import Path
 
+'''
+Split the dataset into 3 subsets:
+- Memory Corruption
+- Memory Lifecycle Issues
+- Input Validation
+'''
+
 dataset = Path(__file__).parent / '../datasets/Balanced/balanced_dataset.parquet'
 dataset = pd.read_parquet(dataset, engine='pyarrow')
 dataset.info()
