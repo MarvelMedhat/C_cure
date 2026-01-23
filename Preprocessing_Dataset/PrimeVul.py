@@ -89,7 +89,7 @@ print("Have Dupliacted ??")
 print(Primevul.duplicated().any())
 
 print(Primevul["is_vulnerable"].value_counts())
-Primevul.loc[Primevul['is_vulnerable'] == False, 'cwe_list'] = Primevul.loc[Primevul['is_vulnerable'] == False, 'cwe_list'].apply(lambda _: [])
+Primevul.loc[Primevul['is_vulnerable'] == False, 'cwe_list'] = Primevul.loc[Primevul['is_vulnerable'] == False, 'cwe_list'].apply(lambda _: "[]")
 
 
 output_file_path = Path(__file__).parent / '../datasets/PrimeVul/PrimeVul_cleaned.parquet'

@@ -9,7 +9,7 @@ scripts_to_run = [
    "Preprocessing_Dataset/Merging.py",
    "Preprocessing_Dataset/Mapping_CWE.py",
    "Preprocessing_Dataset/CWE_Category.py",
-   "Preprocessing_Dataset/Familes.py",
+   "Preprocessing_Dataset/Families.py",
    "Preprocessing_Dataset/Balancing.py",
    "Preprocessing_Dataset/Split_Dataset.py"
 ]
